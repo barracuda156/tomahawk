@@ -700,11 +700,6 @@ TomahawkApp::onInfoSystemReady()
     QNetworkReply* r = Tomahawk::Utils::nam()->get( request );
     connect( r, SIGNAL( finished() ), this, SLOT( spotifyApiCheckFinished() ) );
 
-#ifdef Q_OS_MAC
-    // Make sure to do this after main window is inited
-    Tomahawk::enableFullscreen( m_mainwindow );
-#endif
-
     initEnergyEventHandler();
 
     if ( arguments().count() > 1 )

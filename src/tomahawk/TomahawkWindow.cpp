@@ -1132,42 +1132,6 @@ TomahawkWindow::showOfflineSources()
 
 
 void
-TomahawkWindow::fullScreenEntered()
-{
-    TomahawkSettings::instance()->setFullscreenEnabled( true );
-//    statusBar()->setSizeGripEnabled( false );
-
-    // Since we just disabled the size-grip the entire statusbar will shift a bit to the right
-    // The volume bar would now have no margin to the right screen edge. Prevent that.
-//    QMargins margins = statusBar()->contentsMargins();
-//    margins.setRight( 24 );
-//    statusBar()->setContentsMargins( margins );
-
-#if defined( Q_WS_MAC )
-    ActionCollection::instance()->getAction( "fullscreen" )->setText( tr( "Exit Full Screen" ) );
-#endif
-}
-
-
-void
-TomahawkWindow::fullScreenExited()
-{
-    TomahawkSettings::instance()->setFullscreenEnabled( false );
-//    statusBar()->setSizeGripEnabled( true );
-
-    // Since we just enabled the size-grip the entire statusbar will shift a bit to the left
-    // The volume bar would now have too big a margin to the right screen edge. Prevent that.
-//    QMargins margins = statusBar()->contentsMargins();
-//    margins.setRight( 0 );
-//    statusBar()->setContentsMargins( margins );
-
-#if defined( Q_WS_MAC )
-    ActionCollection::instance()->getAction( "fullscreen" )->setText( tr( "Enter Full Screen" ) );
-#endif
-}
-
-
-void
 TomahawkWindow::loadPlaylist()
 {
     LoadPlaylistDialog* diag = new LoadPlaylistDialog( this, Qt::Sheet );
@@ -1510,10 +1474,6 @@ void
 TomahawkWindow::toggleFullscreen()
 {
     tDebug() << Q_FUNC_INFO;
-
-#if defined( Q_WS_MAC )
-   Tomahawk::toggleFullscreen();
-#endif
 }
 
 

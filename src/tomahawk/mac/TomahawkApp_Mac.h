@@ -23,7 +23,6 @@
 // copyright David Sansome 2010
 
 class QString;
-class QObject;
 
 namespace Tomahawk {
 
@@ -44,10 +43,6 @@ void setShortcutHandler(Tomahawk::MacShortcutHandler* engine);
 // used for opening files with tomahawk
 void setApplicationHandler(PlatformInterface* handler);
 void checkForUpdates();
-
-// Pass in a QObject with slots "fullScreenEntered() and fullScreenExited() in order to be notified
-void toggleFullscreen();
-void enableFullscreen( QObject* notifier );
 
 };
 

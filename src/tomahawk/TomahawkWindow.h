@@ -111,9 +111,6 @@ public slots:
     void rescanCollectionManually();
     void showOfflineSources();
 
-    void fullScreenEntered();
-    void fullScreenExited();
-
 private slots:
     void onHistoryBackAvailable( bool avail );
     void onHistoryForwardAvailable( bool avail );
