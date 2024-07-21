@@ -23,7 +23,7 @@
 
 namespace TomahawkUtils
 {
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     const qreal DpiScaler::s_baseDpi = 72.;
 #else
     const qreal DpiScaler::s_baseDpi = 96.;
@@ -179,7 +179,7 @@ DpiScaler::ratioFromFontHeight()
 
     qreal basePpp = s_baseDpi / 72.; //72*(1.333)=96 dpi
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     const int baseFontSize = 13;
 #else
     const int baseFontSize = 8;

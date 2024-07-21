@@ -107,7 +107,7 @@ TomahawkWindow::TomahawkWindow( QWidget* parent )
     , m_searchWidget( 0 )
     , m_trayIcon( 0 )
 {
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     setWindowIcon( QIcon( RESPATH "icons/tomahawk-icon-128x128.png" ) );
 #endif
 
@@ -216,7 +216,7 @@ TomahawkWindow::loadSettings()
      }
 #endif
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     bool mbVisible = s->menuBarVisible();
     menuBar()->setVisible( mbVisible );
     m_compactMenuAction->setVisible( !mbVisible );
@@ -255,7 +255,7 @@ TomahawkWindow::applyPlatformTweaks()
         isQtCurve = true;
     qApp->setStyle( new ProxyStyle( isQtCurve ) );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     delete ui->hline1;
     delete ui->hline2;
 #else
@@ -268,7 +268,7 @@ TomahawkWindow::applyPlatformTweaks()
 void
 TomahawkWindow::setupToolBar()
 {
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     Tomahawk::setupToolBarMac( this );
 
     m_backAction = new QAction( this );
@@ -346,7 +346,7 @@ TomahawkWindow::setupToolBar()
 
     m_backAction->setToolTip( tr( "Go back one page" ) );
     m_forwardAction->setToolTip( tr( "Go forward one page" ) );
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     m_backAction->setShortcut( QKeySequence( "Ctrl+Left" ) );
     m_forwardAction->setShortcut( QKeySequence( "Ctrl+Right" ) );
 #else
@@ -450,7 +450,7 @@ TomahawkWindow::setupSideBar()
     sidebarWidget->layout()->setContentsMargins( 0, 0, 0, 0 );
     sidebarWidget->layout()->setMargin( 0 );
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     sidebarWidget->layout()->setSpacing( 0 );
 #endif
 
@@ -500,7 +500,7 @@ TomahawkWindow::setupShortcuts()
 void
 TomahawkWindow::setupUpdateCheck()
 {
-#if defined( Q_OS_MAC ) && defined( HAVE_SPARKLE )
+#if defined( Q_WS_MAC ) && defined( HAVE_SPARKLE )
     connect( ActionCollection::instance()->getAction( "checkForUpdates" ), SIGNAL( triggered( bool ) ),
              SLOT( checkForUpdates() ) );
     #elif defined( Q_OS_WIN ) && defined( QTSPARKLE_FOUND )
@@ -682,7 +682,7 @@ TomahawkWindow::setupSignals()
     // echonest is dead, disable stations
     // connect( ac->getAction( "createStation" ), SIGNAL( triggered() ), SLOT( createStation() ) );
 
-#if defined( Q_OS_MAC )
+#if defined( Q_WS_MAC )
     connect( ac->getAction( "minimize" ), SIGNAL( triggered() ), SLOT( minimize() ) );
     connect( ac->getAction( "zoom" ), SIGNAL( triggered() ), SLOT( maximize() ) );
     connect( ac->getAction( "fullscreen" ), SIGNAL( triggered() ), SLOT( toggleFullscreen() ) );
@@ -703,7 +703,7 @@ TomahawkWindow::setupMenuBar()
     m_menuBar->setFont( TomahawkUtils::systemFont() );
 
     setMenuBar( m_menuBar );
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     m_compactMainMenu = ActionCollection::instance()->createCompactMenu( this );
 #endif
 }
@@ -764,7 +764,7 @@ TomahawkWindow::closeEvent( QCloseEvent* e )
         return;
     }
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     else if ( e->spontaneous() && QSystemTrayIcon::isSystemTrayAvailable() )
         {
             hide();
@@ -782,7 +782,7 @@ TomahawkWindow::showEvent( QShowEvent* e )
 {
     QMainWindow::showEvent( e );
 
-#if defined( Q_OS_MAC )
+#if defined( Q_WS_MAC )
     ActionCollection::instance()->getAction( "minimize" )->setDisabled( false );
     ActionCollection::instance()->getAction( "zoom" )->setDisabled( false );
 #endif
@@ -794,7 +794,7 @@ TomahawkWindow::hideEvent( QHideEvent* e )
 {
     QMainWindow::hideEvent( e );
 
-#if defined( Q_OS_MAC )
+#if defined( Q_WS_MAC )
     ActionCollection::instance()->getAction( "minimize" )->setDisabled( true );
     ActionCollection::instance()->getAction( "zoom" )->setDisabled( true );
 #endif
@@ -806,7 +806,7 @@ TomahawkWindow::keyPressEvent( QKeyEvent* e )
 {
     bool accept = true;
 
-#if ! defined ( Q_OS_MAC )
+#if ! defined ( Q_WS_MAC )
 #define KEY_PRESSED Q_FUNC_INFO << "Multimedia Key Pressed:"
     switch ( e->key() )
     {
@@ -1004,46 +1004,10 @@ TomahawkWindow::showOfflineSources()
 
 
 void
-TomahawkWindow::fullScreenEntered()
-{
-    TomahawkSettings::instance()->setFullscreenEnabled( true );
-//    statusBar()->setSizeGripEnabled( false );
-
-    // Since we just disabled the size-grip the entire statusbar will shift a bit to the right
-    // The volume bar would now have no margin to the right screen edge. Prevent that.
-//    QMargins margins = statusBar()->contentsMargins();
-//    margins.setRight( 24 );
-//    statusBar()->setContentsMargins( margins );
-
-#if defined( Q_OS_MAC )
-    ActionCollection::instance()->getAction( "fullscreen" )->setText( tr( "Exit Full Screen" ) );
-#endif
-}
-
-
-void
-TomahawkWindow::fullScreenExited()
-{
-    TomahawkSettings::instance()->setFullscreenEnabled( false );
-//    statusBar()->setSizeGripEnabled( true );
-
-    // Since we just enabled the size-grip the entire statusbar will shift a bit to the left
-    // The volume bar would now have too big a margin to the right screen edge. Prevent that.
-//    QMargins margins = statusBar()->contentsMargins();
-//    margins.setRight( 0 );
-//    statusBar()->setContentsMargins( margins );
-
-#if defined( Q_OS_MAC )
-    ActionCollection::instance()->getAction( "fullscreen" )->setText( tr( "Enter Full Screen" ) );
-#endif
-}
-
-
-void
 TomahawkWindow::loadPlaylist()
 {
     LoadPlaylistDialog* diag = new LoadPlaylistDialog( this, Qt::Sheet );
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     connect( diag, SIGNAL( finished( int ) ), this, SLOT( loadPlaylistFinished( int ) ) );
     diag->show();
 #else
@@ -1309,7 +1273,7 @@ TomahawkWindow::showWhatsNew_0_8()
 void
 TomahawkWindow::checkForUpdates()
 {
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     Tomahawk::checkForUpdates();
 #endif
 }
@@ -1373,7 +1337,7 @@ TomahawkWindow::toggleFullscreen()
 {
     tDebug() << Q_FUNC_INFO;
 
-#if defined( Q_OS_MAC )
+#if defined( Q_WS_MAC )
     Tomahawk::toggleFullscreen();
 #endif
 }
@@ -1389,7 +1353,7 @@ TomahawkWindow::crashNow()
 void
 TomahawkWindow::toggleMenuBar() //SLOT
 {
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     if ( menuBar()->isVisible() )
     {
         menuBar()->setVisible( false );

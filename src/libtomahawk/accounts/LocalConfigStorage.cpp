@@ -31,7 +31,7 @@ namespace Accounts
 
 const QString LocalConfigStorage::s_credentialsServiceName = "Tomahawk";
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
 QString
 LocalConfigStorage::credentialsServiceName()
 {

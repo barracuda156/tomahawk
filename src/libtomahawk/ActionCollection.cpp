@@ -121,7 +121,7 @@ ActionCollection::initActions()
     m_actionCollection[ "createStation" ]->setShortcut( QKeySequence( "Ctrl+S" ) );
     m_actionCollection[ "createStation" ]->setShortcutContext( Qt::ApplicationShortcut );
     */
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     m_actionCollection[ "minimize" ] = new QAction( tr( "Minimize" ), this );
     m_actionCollection[ "minimize" ]->setShortcut( QKeySequence( "Ctrl+M" ) );
     m_actionCollection[ "zoom" ] = new QAction( tr( "Zoom" ), this );
@@ -141,7 +141,7 @@ ActionCollection::initActions()
     m_actionCollection[ "legalInfo" ]->setMenuRole( QAction::ApplicationSpecificRole );
     m_actionCollection[ "openLogfile" ] = new QAction( tr( "&View Logfile" ), this );
     m_actionCollection[ "openLogfile" ]->setMenuRole( QAction::ApplicationSpecificRole );
-    #if defined( Q_OS_MAC ) && defined( HAVE_SPARKLE ) || defined( Q_OS_WIN )
+    #if defined( Q_WS_MAC ) && defined( HAVE_SPARKLE ) || defined( Q_OS_WIN )
     m_actionCollection[ "checkForUpdates" ] = new QAction( tr( "Check For Updates..." ), this );
     m_actionCollection[ "checkForUpdates" ]->setMenuRole( QAction::ApplicationSpecificRole );
 #endif
@@ -179,7 +179,7 @@ ActionCollection::createMenuBar( QWidget *parent )
 
     QMenu* settingsMenu = new QMenu( tr( "&Settings" ), menuBar );
     settingsMenu->setFont( TomahawkUtils::systemFont() );
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     settingsMenu->addAction( m_actionCollection[ "toggleMenuBar" ] );
 #endif
     settingsMenu->addAction( m_actionCollection[ "preferences" ] );
@@ -199,11 +199,11 @@ ActionCollection::createMenuBar( QWidget *parent )
     helpMenu->addAction( m_actionCollection[ "aboutTomahawk" ] );
 
     // Setup update check
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     helpMenu->insertSeparator( m_actionCollection[ "legalInfo" ] );
 #endif
 
-#if defined( Q_OS_MAC ) && defined( HAVE_SPARKLE )
+#if defined( Q_WS_MAC ) && defined( HAVE_SPARKLE )
     helpMenu->addAction( m_actionCollection[ "checkForUpdates" ] );
 #elif defined( Q_OS_WIN )
     helpMenu->addSeparator();
@@ -218,7 +218,7 @@ ActionCollection::createMenuBar( QWidget *parent )
     menuBar->addMenu( controlsMenu );
     menuBar->addMenu( settingsMenu );
 
-#if defined( Q_OS_MAC )
+#if defined( Q_WS_MAC )
     QMenu* windowMenu = new QMenu( tr( "&Window" ), menuBar );
     windowMenu->setFont( TomahawkUtils::systemFont() );
     windowMenu->addAction( m_actionCollection[ "minimize" ] );
@@ -251,7 +251,7 @@ ActionCollection::createCompactMenu( QWidget* parent )
     compactMenu->addAction( m_actionCollection[ "rescanCollection" ] );
     compactMenu->addSeparator();
 
-#ifdef Q_OS_MAC // This should never happen anyway
+#ifdef Q_WS_MAC // This should never happen anyway
     compactMenu->addAction( m_actionCollection[ "minimize" ] );
     compactMenu->addAction( m_actionCollection[ "zoom" ] );
 #else
@@ -268,11 +268,11 @@ ActionCollection::createCompactMenu( QWidget* parent )
     compactMenu->addAction( m_actionCollection[ "aboutTomahawk" ] );
 
     // Setup update check
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     compactMenu->insertSeparator( m_actionCollection[ "legalInfo" ] );
 #endif
 
-#if defined( Q_OS_MAC ) && defined( HAVE_SPARKLE )
+#if defined( Q_WS_MAC ) && defined( HAVE_SPARKLE )
     compactMenu->addAction( m_actionCollection[ "checkForUpdates" ] );
 #elif defined( Q_OS_WIN )
     compactMenu->addSeparator();

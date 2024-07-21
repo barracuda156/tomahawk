@@ -1,6 +1,6 @@
 /* === This file is part of Tomahawk Player - <http://tomahawk-player.org> ===
- *
- *   Copyright 2010-2011, Leo Franchi <lfranchi@kde.org>
+ * 
+ *   Copyright 2010-2011, Christian Muehlhaeuser <muesli@tomahawk-player.org>
  *
  *   Tomahawk is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,34 +16,28 @@
  *   along with Tomahawk. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOMAHAWKAPP_MAC_H
-#define TOMAHAWKAPP_MAC_H
+#import <AppKit/NSApplication.h>
 
-// this file and tomahawk_app.mm copied and inspired by mac_startup.* in clementine player,
+#include "config.h"
+
+// this file  copied and inspired by mac_startup.* in clementine player,
 // copyright David Sansome 2010
-
-class QString;
-
 namespace Tomahawk {
+    class PlatformInterface;
+}
 
-class MacShortcutHandler;
-
-/// Interface between cocoa and tomahawk
-class PlatformInterface {
- public:
-  // Called when the application should show itself.
-  virtual void activate() = 0;
-  virtual bool loadUrl( const QString& url ) = 0;
-
-  virtual ~PlatformInterface() {}
-};
-
-void macMain();
-void setShortcutHandler(Tomahawk::MacShortcutHandler* engine);
-// used for opening files with tomahawk
-void setApplicationHandler(PlatformInterface* handler);
-void checkForUpdates();
-
-};
-
+#ifdef SNOW_LEOPARD
+@interface AppDelegate : NSObject <NSApplicationDelegate> {
+#else
+@interface AppDelegate : NSObject {
 #endif
+  Tomahawk::PlatformInterface* application_handler_;
+  //NSMenu* dock_menu_;
+}
+
+- (id) initWithHandler: (Tomahawk::PlatformInterface*)handler;
+// NSApplicationDelegate
+- (BOOL) applicationShouldHandleReopen: (NSApplication*)app hasVisibleWindows:(BOOL)flag;
+//- (NSMenu*) applicationDockMenu: (NSApplication*)sender;
+//- (void) setDockMenu: (NSMenu*)menu;
+@end

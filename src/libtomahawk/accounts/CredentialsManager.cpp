@@ -20,7 +20,7 @@
 
 #include "utils/Logger.h"
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     #include "TomahawkSettings.h"
 #else
     #include <qt5keychain/keychain.h>
@@ -86,7 +86,7 @@ CredentialsManager::loadCredentials( const QString &service )
     const QStringList& accountIds = m_services.value( service );
     tDebug() << Q_FUNC_INFO << "keys for service" << service << ":" << accountIds;
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     foreach ( QString key, accountIds )
     {
         tDebug() << Q_FUNC_INFO << "beginGroup" << QString( "accounts/%1" ).arg( key );
@@ -109,7 +109,7 @@ CredentialsManager::loadCredentials( const QString &service )
         QKeychain::ReadPasswordJob* j = new QKeychain::ReadPasswordJob( service, this );
         j->setKey( key );
         j->setAutoDelete( false );
-#if defined( Q_OS_UNIX ) && !defined( Q_OS_MAC )
+#if defined( Q_OS_UNIX ) && !defined( Q_WS_MAC )
         j->setInsecureFallback( true );
 #endif
         connect( j, SIGNAL( finished( QKeychain::Job* ) ),
@@ -124,7 +124,7 @@ CredentialsManager::loadCredentials( const QString &service )
         // We did not launch any readJob, so we're done already.
         emit serviceReady( service );
     }
-#endif //Q_OS_MAC
+#endif //Q_WS_MAC
 }
 
 
@@ -180,7 +180,7 @@ CredentialsManager::setCredentials( const CredentialsStorageKey& csKey, const QV
 
         m_credentials.remove( csKey );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
         TomahawkSettings::instance()->beginGroup( QString( "accounts/%1" ).arg( csKey.key() ) );
         TomahawkSettings::instance()->remove( "credentials" );
         TomahawkSettings::instance()->endGroup();
@@ -197,7 +197,7 @@ CredentialsManager::setCredentials( const CredentialsStorageKey& csKey, const QV
 
         m_credentials.insert( csKey, value );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
         TomahawkSettings::instance()->beginGroup( QString( "accounts/%1" ).arg( csKey.key() ) );
         TomahawkSettings::instance()->setValue( "credentials", value );
         TomahawkSettings::instance()->endGroup();
@@ -229,12 +229,12 @@ CredentialsManager::setCredentials( const CredentialsStorageKey& csKey, const QV
         }
 
         j = wj;
-#endif //Q_OS_MAC
+#endif //Q_WS_MAC
     }
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     j->setAutoDelete( false );
-#if defined( Q_OS_UNIX ) && !defined( Q_OS_MAC )
+#if defined( Q_OS_UNIX ) && !defined( Q_WS_MAC )
     j->setInsecureFallback( true );
 #endif
     connect( j, SIGNAL( finished( QKeychain::Job* ) ),
@@ -262,7 +262,7 @@ CredentialsManager::setCredentials( const QString& serviceName, const QString& k
 void
 CredentialsManager::keychainJobFinished( QKeychain::Job* j )
 {
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     // tDebug() << Q_FUNC_INFO;
     if ( QKeychain::ReadPasswordJob* readJob = qobject_cast< QKeychain::ReadPasswordJob* >( j ) )
     {
@@ -310,7 +310,7 @@ CredentialsManager::keychainJobFinished( QKeychain::Job* j )
                << ( ( j->error() == QKeychain::NoError ) ? "without error" : QString( "with ERROR: %1 %2" ).arg( j->error() ).arg( j->errorString() ) );
     }
     j->deleteLater();
-#endif //Q_OS_MAC
+#endif //Q_WS_MAC
 }
 
 } //namespace Accounts

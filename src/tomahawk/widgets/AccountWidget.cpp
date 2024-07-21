@@ -133,7 +133,7 @@ AccountWidget::AccountWidget( QWidget* parent )
     vLayout->addWidget( m_inviteButton, 1, 1 );
     vLayout->setColumnStretch( 0, 1 );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     layout()->setContentsMargins( 0, 0, 0, 0 );
 #endif
 

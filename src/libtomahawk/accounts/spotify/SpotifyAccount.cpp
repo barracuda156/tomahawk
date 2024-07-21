@@ -56,7 +56,7 @@ using namespace Accounts;
 
 static QPixmap* s_icon = 0;
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
 static QString s_resolverId = "spotify-osx";
 #elif defined(Q_OS_WIN)
 static QString s_resolverId = "spotify-win";
@@ -263,7 +263,7 @@ SpotifyAccount::checkForResolver()
 #if defined(Q_OS_WIN)
     QDir appDataDir = TomahawkUtils::appDataDir();
     return appDataDir.exists( QString( "atticaresolvers/%1/spotify_tomahawkresolver.exe" ).arg( s_resolverId ) );
-#elif defined(Q_OS_LINUX)  || defined(Q_OS_MAC)
+#elif defined(Q_OS_LINUX)  || defined(Q_WS_MAC)
     QDir appDataDir = TomahawkUtils::appDataDir();
     return appDataDir.exists( QString( "atticaresolvers/%1/spotify_tomahawkresolver" ).arg( s_resolverId ) );
 #endif

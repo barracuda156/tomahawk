@@ -207,7 +207,7 @@ SourceTreePopupDialog::paintEvent( QPaintEvent* event )
     outline.lineTo( leftEdgeOffset, brect.top() + brect.height() / 2 + leftTriangleWidth / 2 );
     outline.lineTo( brect.left(), brect.top() + brect.height() / 2 );
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     TomahawkUtils::drawCompositedPopup( this,
                                         outline,
                                         TomahawkStyle::BORDER_LINE,

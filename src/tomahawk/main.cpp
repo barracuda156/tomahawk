@@ -28,14 +28,14 @@
 
 #include "qca.h"
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     #include "TomahawkApp_Mac.h"
 #endif
 
-#ifdef Q_OS_MAC64
+#ifdef Q_WS_MAC64
     #include <Carbon/Carbon.h>
     static pascal OSErr appleEventHandler( const AppleEvent*, AppleEvent*, void* );
-#elif defined Q_OS_MAC32
+#elif defined Q_WS_MAC32
     #include </System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/Headers/AppleEvents.h>
     static pascal OSErr appleEventHandler( const AppleEvent*, AppleEvent*, long );
 #endif
@@ -163,7 +163,7 @@ main( int argc, char *argv[] )
     QCA::Initializer init;
     Q_UNUSED( init )
 
-    #ifdef Q_OS_MAC
+    #ifdef Q_WS_MAC
     // Do Mac specific startup to get media keys working.
     // This must go before QApplication initialisation.
     Tomahawk::macMain();
@@ -171,7 +171,7 @@ main( int argc, char *argv[] )
     // used for url handler
     AEEventHandlerUPP h = AEEventHandlerUPP( appleEventHandler );
     AEInstallEventHandler( 'GURL', 'GURL', h, 0, false );
-    #endif // Q_OS_MAC
+    #endif // Q_WS_MAC
 #endif //Q_OS_WIN
 
         QCoreApplication::setAttribute( Qt::AA_X11InitThreads );
@@ -244,12 +244,12 @@ main( int argc, char *argv[] )
 }
 
 
-#ifdef Q_OS_MAC
-    #ifdef Q_OS_MAC64
+#ifdef Q_WS_MAC
+    #ifdef Q_WS_MAC64
 static pascal OSErr appleEventHandler( const AppleEvent* e, AppleEvent*, void* )
-    #elif defined Q_OS_MAC32
+    #elif defined Q_WS_MAC32
 static pascal OSErr appleEventHandler( const AppleEvent* e, AppleEvent*, long )
-    #endif //Q_OS_MAC64/32
+    #endif //Q_WS_MAC64/32
 {
     OSType id = typeWildCard;
     AEGetAttributePtr( e, keyEventIDAttr, typeType, 0, &id, sizeof( id ), 0 );

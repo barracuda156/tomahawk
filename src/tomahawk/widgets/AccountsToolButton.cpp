@@ -54,7 +54,7 @@ AccountsToolButton::AccountsToolButton( QWidget* parent )
     TomahawkUtils::unmarginLayout( w->layout() );
 
     w->setContentsMargins( scaled( 6, 6, 6, 6 ) );
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     w->setContentsMargins( 6, 6, 6, 0 );
     wMainLayout->setMargin( 12 );
 #endif
@@ -105,7 +105,7 @@ AccountsToolButton::AccountsToolButton( QWidget* parent )
     connect( m_proxy, SIGNAL( modelReset() ),
              this, SLOT( updateIcons() ) );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     setIconSize( QSize( iconSize().width()-4, iconSize().height()-4 ) );
     setStyleSheet( "AccountsToolButton {"
                    "    border: 1px solid #7d7d7d;"

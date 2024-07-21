@@ -136,7 +136,7 @@ ResolverAccountFactory::createFromPath( const QString& path, const QString& fact
 
 #if defined( Q_OS_WIN )
             myPlatform = "win";
-#elif defined( Q_OS_MAC )
+#elif defined( Q_WS_MAC )
             myPlatform = "osx";
 #elif defined( Q_OS_LINUX )
             if ( __WORDSIZE == 32 )

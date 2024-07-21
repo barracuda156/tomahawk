@@ -52,7 +52,7 @@ SocialWidget::SocialWidget( QWidget* parent )
 
     TomahawkUtils::unmarginLayout( layout() );
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     ui->verticalLayout->setContentsMargins( 12, 4, 12, 12 );
     setContentsMargins( contentsMargins().left() + 2, contentsMargins().top() + 2,
                         contentsMargins().right() + 2, contentsMargins().bottom() + 2 + ARROW_HEIGHT );

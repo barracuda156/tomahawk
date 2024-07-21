@@ -88,7 +88,7 @@
     #include "linux/GnomeShortcutHandler.h"
 #endif
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     #include "mac/MacShortcutHandler.h"
 
     #include <sys/resource.h>
@@ -113,7 +113,7 @@ const char* enApiSecret = "BNvTzfthHr/d1eNhHLvL1Jo=";
 void
 increaseMaxFileDescriptors()
 {
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     /// Following code taken from Clementine project, main.cpp. Thanks!
     // Bump the soft limit for the number of file descriptors from the default of 256 to
     // the maximum (usually 1024).
@@ -174,7 +174,7 @@ TomahawkApp::init()
 
     m_headless = arguments().contains( "--headless" );
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     setWindowIcon( QIcon( RESPATH "icons/tomahawk-icon-128x128.png" ) );
     setQuitOnLastWindowClosed( false );
 #endif
@@ -192,7 +192,7 @@ TomahawkApp::init()
 #ifdef Q_OS_WIN
     f.setPointSize( 10 );
 #endif
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     f.setPointSize( f.pointSize() - 2 );
 #endif
 
@@ -252,7 +252,7 @@ TomahawkApp::init()
     GeneratorFactory::registerFactory( "database", new DatabaseFactory );
 
     // Register shortcut handler for this platform
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     m_shortcutHandler = QPointer<Tomahawk::ShortcutHandler>( new MacShortcutHandler( this ) );
     Tomahawk::setShortcutHandler( static_cast<MacShortcutHandler*>( m_shortcutHandler.data() ) );
 
@@ -614,7 +614,7 @@ TomahawkApp::onShutdownDelayed()
     d->setAutoReset( false );
     d->setWindowTitle( tr( "%applicationName" ) );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     d->setAttribute( Qt::WA_MacAlwaysShowToolWindow );
 #endif
     d->show();
@@ -711,11 +711,6 @@ TomahawkApp::onInfoSystemReady()
 
     QNetworkReply* r = Tomahawk::Utils::nam()->get( request );
     connect( r, SIGNAL( finished() ), this, SLOT( spotifyApiCheckFinished() ) );
-
-#ifdef Q_OS_MAC
-    // Make sure to do this after main window is inited
-    Tomahawk::enableFullscreen( m_mainwindow );
-#endif
 
     initEnergyEventHandler();
 

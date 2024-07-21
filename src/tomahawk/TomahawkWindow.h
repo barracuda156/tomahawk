@@ -105,9 +105,6 @@ public slots:
     void rescanCollectionManually();
     void showOfflineSources();
 
-    void fullScreenEntered();
-    void fullScreenExited();
-
 signals:
     void searchEdited( const QString& text );
 
@@ -189,7 +186,7 @@ private:
 
     // Menus and menu actions: Accounts menu
     QMenuBar    *m_menuBar;
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     QAction     *m_compactMenuAction;
     QMenu       *m_compactMainMenu;
 #endif

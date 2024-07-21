@@ -108,7 +108,7 @@ SourceTreeView::SourceTreeView( QWidget* parent )
     setEditTriggers( NoEditTriggers );
     setAutoExpandDelay( 500 );
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     // FIXME: scrollbar width
     // TomahawkStyle::styleScrollBar( verticalScrollBar() );
 #endif

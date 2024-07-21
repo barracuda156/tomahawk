@@ -64,7 +64,7 @@ void
 SlideSwitchButton::init()
 {
     setCheckable( true );
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     setMouseTracking( true );
 #endif
 
@@ -95,7 +95,7 @@ SlideSwitchButton::init()
 QSize
 SlideSwitchButton::sizeHint() const
 {
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     const QSize size = QPushButton::sizeHint();
 #else
     // Don't believe the hype. OS X doesn't play nice.
@@ -192,7 +192,7 @@ SlideSwitchButton::paintEvent( QPaintEvent* event )
 
     painter.drawPixmap( m_knobX * ( width() - m_knob.width() ), 0, m_knob );
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     if ( option.state &  QStyle::State_MouseOver )
     {
         painter.setBrush( QBrush() );

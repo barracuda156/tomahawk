@@ -44,7 +44,7 @@ ColumnViewPreviewWidget::ColumnViewPreviewWidget( ColumnView* parent )
     QBoxLayout* mainLayout = new QVBoxLayout;
     setLayout( mainLayout );
 
-#ifndef Q_OS_MAC //we don't need to scale on OSX anyway
+#ifndef Q_WS_MAC //we don't need to scale on OSX anyway
     mainLayout->addSpacing( TomahawkUtils::DpiScaler::scaledY( this, 8 ) );
 #else
     mainLayout->addSpacing( 8 );
@@ -62,7 +62,7 @@ ColumnViewPreviewWidget::ColumnViewPreviewWidget( ColumnView* parent )
     coverCenterLayout->addWidget( m_cover );
     coverCenterLayout->addStretch();
 
-#ifndef Q_OS_MAC //we don't need to scale on OSX anyway
+#ifndef Q_WS_MAC //we don't need to scale on OSX anyway
     mainLayout->addSpacing( TomahawkUtils::DpiScaler::scaledY( this, 16 ) );
 #else
     mainLayout->addSpacing( 16 );
@@ -94,7 +94,7 @@ ColumnViewPreviewWidget::ColumnViewPreviewWidget( ColumnView* parent )
     artistLayout->addStretch();
     mainLayout->addLayout( artistLayout );
 
-#ifndef Q_OS_MAC //we don't need to scale on OSX anyway
+#ifndef Q_WS_MAC //we don't need to scale on OSX anyway
     mainLayout->addSpacing( TomahawkUtils::DpiScaler::scaledY( this, 16 ) );
 #else
     mainLayout->addSpacing( 16 );
@@ -173,7 +173,7 @@ ColumnViewPreviewWidget::ColumnViewPreviewWidget( ColumnView* parent )
 
     TomahawkUtils::unmarginLayout( mainLayout );
 
-#ifndef Q_OS_MAC //we don't need to scale on OSX anyway
+#ifndef Q_WS_MAC //we don't need to scale on OSX anyway
     gridLayout->setSpacing( TomahawkUtils::DpiScaler::scaledX( this, 4 ) );
 #else
     gridLayout->setSpacing( 4 );

@@ -60,7 +60,7 @@
     #include <shlobj.h>
 #endif
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     #include <Carbon/Carbon.h>
     #include <sys/sysctl.h>
 #endif
@@ -77,14 +77,14 @@ static quint64 s_infosystemRequestId = 0;
 static QMutex s_infosystemRequestIdMutex;
 static bool s_headless = false;
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
 QString
 appSupportFolderPath()
 {
     // honestly, it is *always* this --mxcl
     return QDir::home().filePath( "Library/Application Support" );
 }
-#endif // Q_OS_MAC
+#endif // Q_WS_MAC
 
 
 bool
@@ -118,7 +118,7 @@ appConfigDir()
 {
     QDir ret;
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     if ( getenv( "HOME" ) )
     {
         return QDir( QString( "%1" ).arg( getenv( "HOME" ) ) );
@@ -177,7 +177,7 @@ appDataDir()
                 path = QString::fromUtf16( (ushort*)acPath );
             }
         }
-    #elif defined(Q_OS_MAC)
+    #elif defined(Q_WS_MAC)
         path = appSupportFolderPath();
     #elif defined(Q_OS_LINUX)
         path = QDir::home().filePath( ".local/share" );
@@ -196,7 +196,7 @@ appDataDir()
 QDir
 appLogDir()
 {
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     return appDataDir();
 #else
     return QDir( QDir::homePath() + "/Library/Logs" );
@@ -611,7 +611,7 @@ operatingSystemVersionDetail()
     version.append( QString( " %1.%2" ).arg( osvi.dwMajorVersion ).arg( osvi.dwMinorVersion ) );
 
     return version;
-#elif defined ( Q_OS_MAC )
+#elif defined ( Q_WS_MAC )
     return "OS X";
 #else
     return "Unknown";

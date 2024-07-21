@@ -108,7 +108,7 @@ PluginLoader::pluginDirs()
 
     QDir appDir( QCoreApplication::instance()->applicationDirPath() );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     pluginDirs << appDir;
     if ( appDir.dirName() == "MacOS" )
     {

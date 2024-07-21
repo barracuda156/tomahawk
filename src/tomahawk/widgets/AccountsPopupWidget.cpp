@@ -50,7 +50,7 @@ AccountsPopupWidget::AccountsPopupWidget( QWidget* parent )
     setContentsMargins( contentsMargins().left() + 2, contentsMargins().top() + 2 + 6 /*arrowHeight*/ ,
                         contentsMargins().right(), contentsMargins().bottom() );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     setContentsMargins( 0, 0, 0, 0 );
     layout()->setContentsMargins( 0, 0, 0, 0 );
 #endif

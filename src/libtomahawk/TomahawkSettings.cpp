@@ -93,7 +93,7 @@ TomahawkSettings::TomahawkSettings( QObject* parent )
 {
     s_instance = this;
 
-    #if !(defined(Q_OS_MAC) && defined(Q_OS_WIN))
+    #if !(defined(Q_WS_MAC) && defined(Q_OS_WIN))
         QFile file( fileName() );
         file.setPermissions( file.permissions() & ~( QFile::ReadGroup | QFile::WriteGroup | QFile::ExeGroup | QFile::ReadOther | QFile::WriteOther | QFile::ExeOther ) );
     #endif
@@ -620,7 +620,7 @@ TomahawkSettings::doUpgrade( int oldVersion, int newVersion )
     {
         //No upgrade on OSX: we keep storing credentials in TomahawkSettings
         //because QtKeychain and/or OSX Keychain is flaky. --Teo 12/2013
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
         const QStringList accounts = value( "accounts/allaccounts" ).toStringList();
         tDebug() << "About to move these accounts to QtKeychain:" << accounts;
 
@@ -644,7 +644,7 @@ TomahawkSettings::doUpgrade( int oldVersion, int newVersion )
                 QKeychain::WritePasswordJob* j = new QKeychain::WritePasswordJob( QLatin1String( "Tomahawk" ), this );
                 j->setKey( account );
                 j->setAutoDelete( true );
-#if defined( Q_OS_UNIX ) && !defined( Q_OS_MAC )
+#if defined( Q_OS_UNIX ) && !defined( Q_WS_MAC )
                 j->setInsecureFallback( true );
 #endif
                 bool ok;
@@ -667,7 +667,7 @@ TomahawkSettings::doUpgrade( int oldVersion, int newVersion )
 
             endGroup();
         }
-#endif //Q_OS_MAC
+#endif //Q_WS_MAC
     }
     else if ( oldVersion == 15 )
     {
@@ -1145,7 +1145,7 @@ TomahawkSettings::setVerboseNotifications( bool notifications )
 bool
 TomahawkSettings::menuBarVisible() const
 {
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     return value( "ui/mainwindow/menuBarVisible", true ).toBool();
 #else
     return true;
@@ -1156,7 +1156,7 @@ TomahawkSettings::menuBarVisible() const
 void
 TomahawkSettings::setMenuBarVisible( bool visible )
 {
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     setValue( "ui/mainwindow/menuBarVisible", visible );
 #endif
 }

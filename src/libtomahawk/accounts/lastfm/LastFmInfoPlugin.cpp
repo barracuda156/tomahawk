@@ -63,7 +63,7 @@ LastFmInfoPlugin::init()
     //HACK work around a bug in liblastfm---it doesn't create its config dir, so when it
     // tries to write the track cache, it fails silently. until we have a fixed version, do this
     // code taken from Amarok (src/services/lastfm/ScrobblerAdapter.cpp)
-#if !(defined(Q_OS_MAC) && defined(Q_OS_WIN))
+#if !(defined(Q_WS_MAC) && defined(Q_OS_WIN))
     QString lpath = QDir::home().filePath( ".local/share/Last.fm" );
     QDir ldir = QDir( lpath );
     if( !ldir.exists() )

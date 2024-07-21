@@ -88,7 +88,7 @@ QToolbarTabDialog::QToolbarTabDialog() :
     pimpl(new QToolbarTabDialogPrivate(this))
 {
     pimpl->dialog = new QDialog();
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     pimpl->dialog.data()->setModal(true);
 #endif
 
@@ -108,7 +108,7 @@ QToolbarTabDialog::QToolbarTabDialog() :
 
     connect(pimpl->toolbar, SIGNAL(actionTriggered(QAction*)), pimpl.data(), SLOT(actionTriggered(QAction*)));
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     pimpl->buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, pimpl->dialog.data());
     connect(pimpl->buttons, SIGNAL(accepted()), pimpl->dialog.data(), SLOT(accept()));
     connect(pimpl->buttons, SIGNAL(rejected()), pimpl->dialog.data(), SLOT(reject()));
@@ -131,7 +131,7 @@ QToolbarTabDialog::QToolbarTabDialog() :
     pimpl->layout = new QVBoxLayout;
 
     pimpl->layout->setContentsMargins( 4, 4, 4, 4 );
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     TomahawkUtils::unmarginLayout( pimpl->layout );
     pimpl->layout->setContentsMargins( 12, 4, 12, 12 );
 #endif

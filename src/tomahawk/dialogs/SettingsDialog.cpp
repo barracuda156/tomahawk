@@ -131,7 +131,7 @@ SettingsDialog::SettingsDialog(QObject *parent )
     m_advancedWidgetUi->aclEntryClearButton->setEnabled( TomahawkSettings::instance()->aclEntries().size() > 0 );
     connect( m_advancedWidgetUi->aclEntryClearButton, SIGNAL( clicked( bool ) ), this, SLOT( aclEntryClearButtonClicked() ) );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     // Avoid resize handles on sheets on osx
     m_proxySettings.setSizeGripEnabled( true );
     QSizeGrip* p = m_proxySettings.findChild< QSizeGrip* >();
@@ -243,7 +243,7 @@ SettingsDialog::SettingsDialog(QObject *parent )
         i = m_downloadsWidgetUi->preferredFormatComboBox->findText( "MP3" );
     m_downloadsWidgetUi->preferredFormatComboBox->setCurrentIndex( i );
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     m_advancedWidget->setMinimumSize( m_advancedWidget->sizeHint() );
     m_accountsWidget->setMinimumWidth( 500 );
 #else
@@ -262,7 +262,7 @@ SettingsDialog::SettingsDialog(QObject *parent )
 #endif
 
     // NOW PLAYING
-// #ifdef Q_OS_MAC
+// #ifdef Q_WS_MAC
 //     ui->checkBoxEnableAdium->setChecked( s->nowPlayingEnabled() );
 // #else
 //     ui->checkBoxEnableAdium->hide();
@@ -565,7 +565,7 @@ SettingsDialog::openAccountFactoryConfig( AccountFactory* factory )
         return;
     }
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     AccountFactoryWrapper dialog( factory, 0 );
     QPointer< AccountFactoryWrapper > watcher( &dialog );
 

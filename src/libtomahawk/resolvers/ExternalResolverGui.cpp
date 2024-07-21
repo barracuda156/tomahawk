@@ -124,7 +124,7 @@ Tomahawk::ExternalResolverGui::widgetFromData( QByteArray& data, QWidget* parent
     configWidget->setLayout( new QBoxLayout( QBoxLayout::TopToBottom ) );
     configWidget->layout()->addWidget( w );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     w->setContentsMargins( 12, 12, 12, 12 );
 #else
     w->setContentsMargins( 6, 6, 6, 6 );

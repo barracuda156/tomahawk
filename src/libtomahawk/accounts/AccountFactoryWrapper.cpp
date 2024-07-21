@@ -57,7 +57,7 @@ AccountFactoryWrapper::AccountFactoryWrapper( AccountFactory* factory, QWidget* 
     connect ( AccountManager::instance(), SIGNAL( added( Tomahawk::Accounts::Account* ) ), this, SLOT( load() ) );
     connect ( AccountManager::instance(), SIGNAL( removed( Tomahawk::Accounts::Account* ) ), this, SLOT( load() ) );
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     setContentsMargins( 0, 0, 0, 0 );
     m_ui->verticalLayout->setSpacing( 6 );
 #endif
@@ -80,7 +80,7 @@ AccountFactoryWrapper::load()
     if ( m_ui->accountsList->model()->rowCount() == 0 )
         accept();
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
     const int padding = 7;
 #else
     const int padding = 8;

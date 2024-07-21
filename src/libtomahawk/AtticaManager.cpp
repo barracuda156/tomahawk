@@ -411,7 +411,7 @@ AtticaManager::binaryResolversList( BaseJob* j )
     Content::List binaryResolvers = job->itemList();
 
     QString platform;
-#if defined(Q_OS_MAC)
+#if defined(Q_WS_MAC)
     platform = "osx";
 #elif defined(Q_OS_WIN)
     platform = "win";

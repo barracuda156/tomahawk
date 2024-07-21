@@ -98,7 +98,7 @@ createAccountFromFactory( Tomahawk::Accounts::AccountFactory* factory, QWidget* 
     bool added = false;
     if( account->configurationWidget() )
     {
-/*#ifdef Q_OS_MAC
+/*#ifdef Q_WS_MAC
         // on osx a sheet needs to be non-modal
         DelegateConfigWrapper* dialog = new DelegateConfigWrapper( account, parent, Qt::Sheet );
         dialog->setProperty( "accountplugin", QVariant::fromValue< QObject* >( account ) );
@@ -139,7 +139,7 @@ openAccountConfig( Tomahawk::Accounts::Account* account, QWidget* parent, bool s
 {
     if( account->configurationWidget() )
     {
-//#ifndef Q_OS_MAC
+//#ifndef Q_WS_MAC
         DelegateConfigWrapper dialog( account, parent );
         dialog.setShowDelete( showDelete );
         QPointer< DelegateConfigWrapper > watcher( &dialog );

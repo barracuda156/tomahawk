@@ -290,7 +290,7 @@ tomahawkWindow()
 }
 
 
-#ifndef Q_OS_MAC
+#ifndef Q_WS_MAC
 void
 bringToFront()
 {

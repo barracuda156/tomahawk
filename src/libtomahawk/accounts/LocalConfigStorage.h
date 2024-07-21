@@ -47,7 +47,7 @@ public:
     void load( const QString& accountId, Account::Configuration& cfg ) const override;
     void remove( const QString& accountId ) override;
 
-#ifdef Q_OS_MAC
+#ifdef Q_WS_MAC
     static QString credentialsServiceName();
 #endif
 

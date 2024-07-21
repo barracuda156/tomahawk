@@ -4,7 +4,6 @@ SET( OS_SPECIFIC_LINK_LIBRARIES
     ${COREFOUNDATION_LIBRARY}
 
     crypto
-    SPMediaKeyTap
 
     /System/Library/Frameworks/AppKit.framework
     /System/Library/Frameworks/Carbon.framework
